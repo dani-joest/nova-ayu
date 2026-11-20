@@ -1,0 +1,951 @@
+/* ==========================================================
+   Happy Birthday, Nova Ayu! - styling
+   Mobile-first. Tanpa framework, tanpa file aset tambahan.
+   File ini ASCII saja agar tidak ada masalah encoding.
+   ========================================================== */
+
+:root {
+  --pink-pastel: #FFD6E7;
+  --pink-soft: #FFB6D1;
+  --pink-deep: #FF9CC2;
+  --cream: #FFF8F0;
+  --lavender: #E8DDFB;
+  --gold: #F9D98B;
+  --white: #FFFFFF;
+  --pink-dark: #B3416F;
+  --ink: #7A2A55;
+
+  --shadow-soft: 0 10px 28px rgba(179, 65, 111, 0.16);
+  --shadow-btn: 0 5px 0 #E58AB0, 0 12px 22px rgba(179, 65, 111, 0.2);
+
+  --font-display: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+  --font-body: 'Quicksand', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--pink-pastel) 0%, var(--cream) 85%);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Blob lembut sebagai latar */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  top: -25vmax;
+  left: -20vmax;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 65%);
+}
+
+body::after {
+  bottom: -25vmax;
+  right: -20vmax;
+  background: radial-gradient(circle, rgba(232, 221, 251, 0.85) 0%, rgba(232, 221, 251, 0) 65%);
+}
+
+/* ---------- Ikon SVG ---------- */
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.ico {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  overflow: visible;
+}
+
+.ico-sm {
+  width: 0.95em;
+  height: 0.95em;
+}
+
+.ico-heart {
+  fill: var(--pink-deep);
+}
+
+.ico-star {
+  width: 0.8em;
+  height: 0.8em;
+  fill: var(--gold);
+}
+
+/* ---------- Dekorasi melayang ---------- */
+.deco,
+.fx {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.deco {
+  z-index: 0;
+}
+
+.fx {
+  z-index: 4;
+}
+
+.deco-item {
+  position: absolute;
+  left: var(--x);
+  bottom: -40px;
+  width: var(--size);
+  height: var(--size);
+  fill: var(--color);
+  opacity: 0.6;
+  will-change: transform;
+  animation: float-up var(--dur) linear var(--delay) infinite;
+}
+
+@keyframes float-up {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(0, -115vh, 0) rotate(var(--rot));
+  }
+}
+
+/* ---------- Layout utama ---------- */
+.app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--safe-top) + 68px) 16px calc(var(--safe-bottom) + 24px);
+}
+
+.screen {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 3vh, 26px);
+  text-align: center;
+}
+
+.screen.enter {
+  animation: screen-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.screen.is-leaving {
+  pointer-events: none;
+  animation: screen-out 0.36s ease both;
+}
+
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes screen-out {
+  to {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 30px 22px 28px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 2px dashed rgba(255, 156, 194, 0.6);
+  border-radius: 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Washi tape di atas kartu */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 90px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-3deg);
+  border-radius: 4px;
+  background: repeating-linear-gradient(45deg, var(--lavender) 0 8px, #ffffff 8px 16px);
+  opacity: 0.9;
+}
+
+/* ---------- Tipografi ---------- */
+.title,
+.title-hi,
+.title-sm {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--pink-dark);
+  line-height: 1.15;
+  text-wrap: balance;
+  outline: none;
+}
+
+.title-hi {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  font-size: clamp(2rem, 9vw, 3rem);
+}
+
+.title {
+  font-size: clamp(1.9rem, 7.5vw, 3rem);
+}
+
+.title-sm {
+  font-size: clamp(1.4rem, 5.5vw, 1.9rem);
+  line-height: 1.25;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.sub {
+  margin: 0;
+  font-size: clamp(0.98rem, 3vw, 1.1rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.sub .ico {
+  vertical-align: -0.15em;
+}
+
+.status {
+  min-height: 1.5em;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--pink-dark);
+}
+
+.beat {
+  animation: beat 1.4s ease-in-out infinite;
+}
+
+@keyframes beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+/* ---------- Tombol ---------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  min-width: 52px;
+  padding: 12px 28px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 3.4vw, 1.1rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-primary {
+  background: var(--pink-soft);
+  box-shadow: var(--shadow-btn);
+}
+
+.btn-primary .ico {
+  fill: var(--ink);
+}
+
+.btn-ghost {
+  background: #ffffff;
+  color: var(--pink-dark);
+  box-shadow: 0 5px 0 #F3D3E2, 0 10px 18px rgba(179, 65, 111, 0.12);
+}
+
+.btn-ghost .ico {
+  fill: var(--pink-deep);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #E58AB0;
+}
+
+.btn-ghost:active {
+  box-shadow: 0 2px 0 #F3D3E2;
+}
+
+:focus-visible {
+  outline: 3px solid var(--pink-dark);
+  outline-offset: 4px;
+}
+
+/* ---------- Ilustrasi ---------- */
+.art {
+  display: block;
+  width: clamp(120px, 38vw, 170px);
+  height: auto;
+  overflow: visible;
+}
+
+.envelope {
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+/* ---------- Kue ulang tahun ---------- */
+.cake {
+  --cake-w: clamp(180px, 60vw, 250px);
+  position: relative;
+  width: var(--cake-w);
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.candles {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(6px, 2vw, 12px);
+  z-index: 2;
+}
+
+.candle {
+  position: relative;
+  width: 26px;
+  height: 74px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.candle::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 12px;
+  height: 48px;
+  transform: translateX(-50%);
+  border-radius: 6px 6px 3px 3px;
+  background: linear-gradient(90deg, var(--pink-soft) 0 33%, #ffffff 33% 66%, var(--lavender) 66%);
+}
+
+.candle:nth-child(even)::before {
+  background: linear-gradient(90deg, var(--lavender) 0 33%, #ffffff 33% 66%, var(--pink-soft) 66%);
+}
+
+.flame {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  width: 14px;
+  height: 22px;
+  margin-left: -7px;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(ellipse at 50% 75%, #FFF8D6 0 25%, #FFD36B 55%, #FF9CC2 100%);
+  box-shadow: 0 0 14px 4px rgba(255, 214, 140, 0.5);
+  transform-origin: 50% 100%;
+  animation: flicker 0.9s ease-in-out infinite alternate;
+  transition: opacity 0.25s ease;
+}
+
+@keyframes flicker {
+  from {
+    transform: scale(1, 1) rotate(-2deg);
+  }
+  to {
+    transform: scale(0.9, 1.08) rotate(2deg);
+  }
+}
+
+/* Lilin yang dipadamkan: api hilang, muncul asap tipis */
+.candle[aria-pressed="false"] .flame {
+  opacity: 0;
+  animation: none;
+}
+
+.candle[aria-pressed="false"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+  animation: smoke 1.6s ease-out forwards;
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 0.9;
+    transform: translate(0, 0) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-6px, -34px) scale(1.8);
+  }
+}
+
+.cake-top {
+  position: relative;
+  width: 100%;
+  height: 56px;
+  background-color: var(--pink-soft);
+  background-image: radial-gradient(circle, #ffffff 0 2.2px, transparent 2.6px);
+  background-size: 22px 18px;
+  background-position: 6px 8px;
+  border-radius: 999px 999px 18px 18px / 56px 56px 18px 18px;
+  box-shadow: inset 0 -8px 0 rgba(255, 255, 255, 0.35);
+}
+
+.cake-top::before,
+.cake-top::after {
+  content: "";
+  position: absolute;
+  bottom: -14px;
+  width: 16px;
+  height: 22px;
+  background: var(--pink-soft);
+  border-radius: 0 0 10px 10px;
+}
+
+.cake-top::before {
+  left: 14%;
+}
+
+.cake-top::after {
+  right: 22%;
+  height: 16px;
+}
+
+.cake-bottom {
+  position: relative;
+  width: 100%;
+  height: 92px;
+  margin-top: 10px;
+  background-color: var(--lavender);
+  border-radius: 18px 18px 24px 24px;
+  box-shadow: inset 0 -12px 0 rgba(255, 255, 255, 0.4);
+}
+
+.cake-bottom::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 10px;
+  opacity: 0.85;
+}
+
+.plate {
+  width: 112%;
+  height: 18px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 8px 16px rgba(179, 65, 111, 0.16);
+}
+
+/* ---------- Kartu pesan ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--pink-pastel);
+}
+
+.badge .ico {
+  width: 22px;
+  height: 22px;
+  fill: var(--pink-dark);
+}
+
+.message-body {
+  width: 100%;
+  text-align: left;
+}
+
+.message-body p {
+  margin: 0 0 0.85em;
+  font-size: clamp(1rem, 3.4vw, 1.08rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.message-body p:first-child {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 5vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--pink-dark);
+}
+
+.message-body p:last-child {
+  margin-bottom: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--pink-dark);
+}
+
+.msg-ico {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.3em;
+  vertical-align: -0.1em;
+  fill: var(--pink-deep);
+}
+
+.message-body p.typing::after {
+  content: "|";
+  margin-left: 2px;
+  color: var(--pink-deep);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Kotak hadiah ---------- */
+.gift-btn {
+  appearance: none;
+  padding: 8px;
+  border: 0;
+  border-radius: 24px;
+  background: none;
+  cursor: pointer;
+}
+
+.gift-box {
+  display: block;
+  width: clamp(140px, 44vw, 190px);
+  height: auto;
+  overflow: visible;
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+.gift-box.is-open {
+  animation: none;
+}
+
+.gift-box .lid {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform 0.7s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.gift-box.is-open .lid {
+  transform: translate(-30px, -56px) rotate(-26deg);
+}
+
+.final-msg {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--pink-dark);
+}
+
+.final-msg.reveal {
+  animation: pop-in 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Tombol musik ---------- */
+.music-btn {
+  position: fixed;
+  z-index: 5;
+  top: calc(var(--safe-top) + 12px);
+  right: calc(var(--safe-right) + 12px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--pink-dark);
+  font: 600 0.9rem var(--font-body);
+  box-shadow: 0 4px 12px rgba(179, 65, 111, 0.16);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.music-btn .ico {
+  fill: var(--pink-deep);
+}
+
+.music-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Confetti & simbol ---------- */
+.confetti,
+.fx-symbol {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+.confetti {
+  display: block;
+  border-radius: 3px;
+}
+
+.fx-symbol {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+/* ---------- Footer: identitas pembuat hadiah ---------- */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0 16px calc(var(--safe-bottom) + 18px);
+  text-align: center;
+  color: #A8637E;
+  line-height: 1.4;
+}
+
+.site-footer::before {
+  content: "";
+  width: 56px;
+  margin-bottom: 8px;
+  border-top: 2px dashed rgba(255, 156, 194, 0.7);
+}
+
+.footer-line {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.footer-from {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Bab tambahan: ramalan, tebak-tebakan, kupon ---------- */
+.cookie-btn {
+  appearance: none;
+  padding: 8px;
+  border: 0;
+  border-radius: 24px;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.cookie {
+  display: block;
+  width: clamp(130px, 40vw, 170px);
+  height: auto;
+  overflow: visible;
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+.fortune {
+  margin: 0;
+  max-width: 320px;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--pink-dark);
+  text-wrap: balance;
+}
+
+.fortune.reveal,
+.riddle-a {
+  animation: pop-in 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+.riddle-q {
+  margin: 0;
+  max-width: 320px;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.riddle-a {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 4vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--pink-dark);
+}
+
+.riddle-a .ico {
+  vertical-align: -0.15em;
+}
+
+.coupons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.coupon {
+  position: relative;
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 96px;
+  padding: 14px 10px;
+  border: 2px dashed var(--pink-soft);
+  border-radius: 18px;
+  background: #ffffff;
+  color: var(--pink-dark);
+  font-family: var(--font-display);
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 4px 0 #F3D3E2;
+  transition: transform 0.18s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+.coupon-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.coupon-note {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--ink);
+  opacity: 0.8;
+}
+
+.coupon:active {
+  transform: translateY(2px);
+}
+
+.coupon[aria-pressed="true"] {
+  background: #F7F1F4;
+  box-shadow: none;
+  opacity: 0.55;
+}
+
+.coupon[aria-pressed="true"]::after {
+  content: "DIPAKAI";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  padding: 2px 8px;
+  border: 2px solid var(--pink-dark);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--pink-dark);
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .coupons {
+    gap: 16px;
+  }
+
+  .coupon {
+    min-height: 108px;
+  }
+}
+
+/* ---------- Responsif ---------- */
+@media (min-width: 600px) {
+  .app {
+    padding-top: calc(var(--safe-top) + 84px);
+  }
+
+  .card {
+    padding: 40px 36px 36px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .screen {
+    max-width: 500px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .deco {
+    display: none;
+  }
+
+  .envelope,
+  .gift-box,
+  .beat {
+    animation: none;
+  }
+}
